@@ -1,0 +1,99 @@
+
+
+'------------
+Property Get IN_X_2_N_E() As Integer
+    Dim Brg_InLine, Brg_XLine, CompBearing As Double
+    Dim Length_InLine, Length_XLine As Double
+    Dim D_L, D_T, Interval_Inline, Interval_XLine As Double
+    Dim East_D_L, North_D_T As Double
+
+
+    Call Bearing_Calc(CompBearing, BoxCorners(2, 3), BoxCorners(2, 4), BoxCorners(3, 3), BoxCorners(3, 4))
+    Brg_InLine = CompBearing
+
+    Call Bearing_Calc(CompBearing, BoxCorners(1, 3), BoxCorners(1, 4), BoxCorners(2, 3), BoxCorners(2, 4))
+    Brg_XLine = CompBearing
+
+    Length_InLine = Sqr((BoxCorners(2, 3) - BoxCorners(1, 3)) ^ 2 + (BoxCorners(2, 4) - BoxCorners(1, 4)) ^ 2)
+    Length_XLine = Sqr((BoxCorners(3, 3) - BoxCorners(2, 3)) ^ 2 + (BoxCorners(3, 4) - BoxCorners(2, 4)) ^ 2)
+
+    Interval_Inline = Length_InLine / (BoxCorners(2, 1) - BoxCorners(1, 1))
+    Interval_XLine = Length_XLine / (BoxCorners(3, 2) - BoxCorners(2, 2))
+
+    D_L = (BG_Calculator_frm.InLine_combo - BoxCorners(1, 1)) * Interval_Inline
+    D_T = (BG_Calculator_frm.XLine_Combo - BoxCorners(1, 2)) * Interval_XLine
+
+    East_D_L = BoxCorners(1, 3) + D_L * Sin(Brg_XLine)
+    North_D_T = BoxCorners(1, 4) + D_L * Cos(Brg_XLine)
+
+    BG_Calculator_frm.East_txt = Round(East_D_L + D_T * Sin(Brg_InLine), 2)
+    BG_Calculator_frm.North_txt = Round(North_D_T + D_T * Cos(Brg_InLine), 2)
+
+End Property
+
+Property Get N_E_2_IN_X() As Integer
+    Dim Brg_1P, Brg_InLine, Brg_XLine, CompBearing, Alpha_P As Double
+    Dim Length_InLine, Length_XLine As Double
+    Dim D_L, D_T, Interval_Inline, Interval_XLine As Double
+    Dim East_D_L, North_D_T As Double
+    Dim Length_1P As Double
+
+    Call Bearing_Calc(CompBearing, BoxCorners(2, 3), BoxCorners(2, 4), BoxCorners(3, 3), BoxCorners(3, 4))
+    Brg_InLine = CompBearing
+
+    Call Bearing_Calc(CompBearing, BoxCorners(1, 3), BoxCorners(1, 4), BoxCorners(2, 3), BoxCorners(2, 4))
+    Brg_XLine = CompBearing
+
+    Call Bearing_Calc(CompBearing, BoxCorners(1, 3), BoxCorners(1, 4), BG_Calculator_frm.East_txt, BG_Calculator_frm.North_txt)
+    Brg_1P = CompBearing
+
+    Length_InLine = Sqr((BoxCorners(2, 3) - BoxCorners(1, 3)) ^ 2 + (BoxCorners(2, 4) - BoxCorners(1, 4)) ^ 2)
+    Length_XLine = Sqr((BoxCorners(3, 3) - BoxCorners(2, 3)) ^ 2 + (BoxCorners(3, 4) - BoxCorners(2, 4)) ^ 2)
+
+    Interval_Inline = Length_InLine / (BoxCorners(2, 1) - BoxCorners(1, 1))
+    Interval_XLine = Length_XLine / (BoxCorners(3, 2) - BoxCorners(2, 2))
+
+    Length_1P = Sqr(((BG_Calculator_frm.East_txt - BoxCorners(1, 3))) ^ 2 + ((BG_Calculator_frm.North_txt - BoxCorners(1, 4))) ^ 2)
+    Alpha_P = (Brg_XLine - Brg_1P) ' Abs(Brg_XLine - Brg_1P)
+
+    D_T = Length_1P * Sin(Alpha_P) / Interval_XLine
+    D_L = Length_1P * Cos(Alpha_P) / Interval_Inline
+
+
+    BG_Calculator_frm.InLine_combo = Round(BoxCorners(1, 1) + D_L, 2)
+    BG_Calculator_frm.XLine_Combo = Round(BoxCorners(1, 2) + D_T, 2)
+
+End Property
+
+
+
+
+Public Function Bearing_Calc(ByRef CompBearing, east_fst_point, north_fst_point, east_snd_point, north_snd_point)
+
+    pi_value = 4 * Atn(1)
+
+    D_east = (east_snd_point - east_fst_point)
+    D_north = (north_snd_point - north_fst_point)
+
+    If D_east >= 0 And D_north > 0 Then
+        CompBearing = Atn((D_east) / (D_north))
+
+    ElseIf D_east >= 0 And D_north < 0 Then
+        CompBearing = pi_value - Abs(Atn((D_east) / (D_north)))
+
+    ElseIf D_east >= 0 And D_north = 0 Then
+        CompBearing = pi_value / 2
+
+    ElseIf D_east < 0 And D_north < 0 Then
+        CompBearing = Abs(Atn((D_east) / (D_north))) + pi_value
+
+    ElseIf D_east < 0 And D_north > 0 Then
+        CompBearing = 2 * pi_value - Abs(Atn((D_east) / (D_north)))
+
+    ElseIf D_east < 0 And D_north = 0 Then
+    CompBearing = 3 / 2 * pi_value
+    End If
+
+    If CompBearing >= 2 * pi_value Then CompBearing = CompBearing - 2 * pi_value
+
+End Function

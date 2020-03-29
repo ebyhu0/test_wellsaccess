@@ -1,0 +1,23 @@
+{% extends "wells/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h1>Concession Page</h1>
+    {{form.as_p}}
+
+    <h1> Wells </h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ formset.management_form|crispy }}
+        {% for form1 in formset %}
+            {% crispy form1 %}
+
+            <p> ____________________________________________</p>
+        {% endfor %}
+     
+
+        <button type="submit">Save</button>
+    </form>
+
+{% endblock content %}
+
+

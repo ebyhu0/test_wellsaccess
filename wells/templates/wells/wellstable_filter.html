@@ -1,0 +1,86 @@
+{% extends "wells/base.html" %}
+{% load crispy_forms_tags %}
+{% load django_tables2 %}
+
+{% block content %}
+
+    {% comment %} Wells Number & Add New Well button {% endcomment %}
+    <div class="card">   {% comment %} style="width:800px;height:100px"> {% endcomment %}
+        <h1>
+            {{ table.rows|length }} Wells (<label id='selected'>0</label>) selected
+        </h1>
+        
+        {% comment %} <a href="{% url 'well-addnew2' %}" class="btn btn-small btn-primary dark">
+            <span class="hidden-phone"><i class="fa fa-user-plus"></i> Add new Well</span>
+        </a> {% endcomment %}
+    </div>
+    {% comment %} ------------------------------ {% endcomment %}
+    {% comment %} Search Fields Form {% endcomment %}
+    <div class="card">
+        {% if filter %}
+            <form method="GET">
+               
+                    {{ filter.form }}
+                    {% comment %} <input type="submit" /> {% endcomment %}
+               
+                {% comment %} {% for obj in filter.qs %}
+                    {{ obj.exploration_name }} <br />
+                {% endfor %} {% endcomment %}
+                {% comment %} {{ filter.form|crispy}} {% endcomment %}
+                {% comment %} <button type="submit" class="btn btn-primary">Search</button> {% endcomment %}
+                <button type="submit" style="width:300px;height:50px" class="btn btn-small btn-info"><i class="fa fa-search"></i> Search</button>
+                {% comment %} <button type="submit" value='selection' style="width:300px;height:50px" class="btn btn-small btn-dark"><i class="fa fa-search"></i> Selected Items</button> {% endcomment %}
+
+                 
+
+            </form>
+
+        {% endif %}
+        </br>
+    </div>
+
+    {% comment %} 
+    {% for well in filter.qs %}
+    <li>{{ well.concession }} - {{ well.exploration_name }}</li>
+    {% endfor %} {% endcomment %}
+    
+    {% comment %} <div class="container"> {% endcomment %}
+    
+     {% comment %} </div> {% endcomment %}
+    {% comment %} ------------------------- {% endcomment %}
+    {% comment %} Table list {% endcomment %}
+    <form action="{% url 'addMultiple_ToCart'%}" method="POST">{% csrf_token %}
+        {% if user.username %}
+
+            <input value="Add Selected To Cart" style="width:300px;height:50px" class="btn btn-small btn-info" type="submit"/>
+        {% endif %}
+        {% comment %} {% render_table table "wells/django-tables2/table.html" %} {% endcomment %}
+        {% render_table table "wells/django-tables2/table.html" %}
+    </form>
+
+    {% comment %} ----------------------------- {% endcomment %}
+
+
+
+
+{% comment %}
+<script language="JavaScript">
+window.updateCount = function() {
+    var x = $(".z:checked").length;
+    document.getElementById("selected").innerHTML = x;
+};    
+</script> {% endcomment %}
+
+{% comment %} 
+<script language="JavaScript">
+function updateCount {
+    var x = document.querySelector('.z:checked').length;
+    document.getElementById("selected").innerHTML = x;
+};
+</script> {% endcomment %}
+
+{% endblock content %}
+
+
+
+

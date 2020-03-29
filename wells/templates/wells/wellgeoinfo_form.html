@@ -1,0 +1,38 @@
+{% extends "wells/base.html" %}
+{% load crispy_forms_tags %}
+{% comment %} {% load crispy_forms_utils %}
+{% load crispy_forms_field %} {% endcomment %}
+{% block content %}
+{{ form.management_form|crispy }}
+
+
+<form method="POST" onsubmit="submit()">
+    {% csrf_token %}
+    {% comment %} <input type="submit"> {% endcomment %}
+    <button class="btn btn-danger pull-right" style="width: 10%; height: 50px" type="submit" >Save</button> <br/> <br/> 
+
+
+
+    {% comment %} {% crispy form %} {% endcomment %}
+    {{ form.as_p }}
+
+    {% comment %} {% crispy formset formset.form.helper %} {% endcomment %}
+    
+    {% for f1 in formset %}
+        {{ formset.management_form|crispy }}
+        {{ formset2.management_form|crispy }}
+        {{ formset3.management_form|crispy }}
+        {% crispy f1 %}
+    {% endfor %}
+
+
+
+    {% comment %} HTML("{% if forloop.first %}Message displayed only in the first form of a formset forms list{% endif %}",
+        Fieldset("Item {{ forloop.counter }}")) {% endcomment %}
+
+    {% comment %} {% for form in example_formset %}
+        {% crispy form %}
+    {% endfor %} {% endcomment %}
+</form>
+{% endblock content %}
+{% comment %} {% display_login_form %} {% endcomment %}

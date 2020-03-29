@@ -1,0 +1,164 @@
+BEGIN;
+--
+-- Create model Bindata
+--
+CREATE TABLE "Bindata" ("BG_ID" serial NOT NULL PRIMARY KEY, "Area" varchar(50) NULL, "Program" varchar(255) NULL, "ProgramOld" varchar(50) NULL, "Point" varchar(25) NULL, "InLine" integer NULL, "XLine" integer NULL, "East" double precision NULL, "North" double precision NULL, "PSD" varchar(50) NULL, "Year" varchar(50) NULL, "remarks" text NULL, "OriginalProjection" varchar(255) NULL, "DisplayProjection" varchar(255) NULL, "SeismicID" integer NULL);
+--
+-- Create model Checked
+--
+CREATE TABLE "Checked" ("chk_id" serial NOT NULL PRIMARY KEY, "chk_lat" double precision NULL, "chk_long" double precision NULL, "chk_east" double precision NULL, "chk_north" double precision NULL, "chk_elev" double precision NULL, "chk_cellar_pno" varchar(50) NULL, "chk_by" varchar(50) NULL, "chk_date" timestamp with time zone NULL, "chk_SV" integer NULL, "chk_Remarks" text NULL, "Equip_Tech_id" integer NULL, "UsedControlGarminId" varchar(6) NULL, "TripScope" varchar(255) NULL, "TripStartDate" timestamp with time zone NULL, "TripEndDate" timestamp with time zone NULL, "GarminLatEg07" varchar(20) NULL, "GarminLongEg07" varchar(20) NULL, "FacilitySurveyImage" text NULL, "TGOJobPath" text NULL, "ObservedBy" integer NULL);
+--
+-- Create model Companies
+--
+CREATE TABLE "Companies" ("ID" serial NOT NULL PRIMARY KEY, "Name" varchar(50) NULL, "Location" varchar(50) NULL, "Address" varchar(255) NULL, "Phone1" varchar(50) NULL, "Phone2" varchar(50) NULL, "Phone3" varchar(50) NULL, "Phone4" varchar(50) NULL, "Fax" varchar(50) NULL, "Contact_Person" varchar(50) NULL, "Cont_Pers_Phone" varchar(50) NULL, "Cont_Pers_Mobile" varchar(50) NULL);
+--
+-- Create model Concession
+--
+CREATE TABLE "Concession" ("TT" integer NULL, "ID" serial NOT NULL PRIMARY KEY, "Concession" varchar(255) NULL, "Area" varchar(50) NULL, "ArabicName" varchar(255) NULL, "Holder" varchar(50) NULL, "Operator" integer NULL, "IsActive" boolean NULL, "Field2" varchar(255) NULL, "Location" integer NULL, "Agreement_ID" integer NULL, "Area_km2" double precision NULL, "ConcessionType" integer NULL);
+--
+-- Create model HcContent
+--
+CREATE TABLE "HC_CONTENT" ("ID" serial NOT NULL PRIMARY KEY, "HC_CONTENT" varchar(255) NULL);
+--
+-- Create model Heightreference
+--
+CREATE TABLE "HeightReference" ("ID" serial NOT NULL PRIMARY KEY, "HeightReference" varchar(255) NULL);
+--
+-- Create model MapPsdDescription
+--
+CREATE TABLE "Map_PSD_Description" ("id" serial NOT NULL PRIMARY KEY, "Map_PSD" varchar(50) NULL, "Description" text NULL);
+--
+-- Create model Operator
+--
+CREATE TABLE "Operator" ("Comp_id" serial NOT NULL PRIMARY KEY, "Company_Name" varchar(50) NULL, "Location" varchar(50) NULL, "Address" varchar(50) NULL, "Phone1" varchar(50) NULL, "Phone2" varchar(50) NULL, "Phone3" varchar(50) NULL, "Phone4" varchar(50) NULL, "Fax" varchar(50) NULL, "Contact_Person" varchar(50) NULL, "Cont_Pers_Phone" varchar(50) NULL, "Cont_Pers_Mobile" varchar(50) NULL);
+--
+-- Create model Persons
+--
+CREATE TABLE "persons" ("ID" integer NOT NULL PRIMARY KEY, "Name" varchar(50) NULL, "Title" varchar(50) NULL, "Room" varchar(50) NULL, "Phone" varchar(50) NULL, "MrgRelation" varchar(50) NULL, "Location" varchar(50) NULL, "UN" varchar(50) NULL, "PW" varchar(50) NULL, "Do_PDF_Creation" boolean NULL, "DepartmentId" integer NULL, "CompanyId" integer NULL);
+--
+-- Create model Provisional
+--
+CREATE TABLE "Provisional" ("Prov_id" serial NOT NULL PRIMARY KEY, "Prov_Name" varchar(50) NULL, "Prov_From" varchar(50) NULL, "Prov_Interpreter_name" varchar(50) NULL, "Prov_Interpreter_Dept" integer NULL, "Prov_Dept" integer NULL, "Prov_InLine" varchar(50) NULL, "Prov_XLine" varchar(50) NULL, "Prov_Lat" double precision NULL, "Prov_Long" double precision NULL, "Prov_east" double precision NULL, "Prov_north" double precision NULL, "Prov_Date" timestamp with time zone NULL, "Prov_well_type" integer NULL, "Prov_Type" varchar(50) NULL, "Prov_Seis_Type" varchar(2) NULL, "Prov_Remarks" text NULL, "Prov_Concession" varchar(50) NULL, "Prov_Checked_by" varchar(50) NULL, "Prov_Checked_Date" timestamp with time zone NULL, "Prov_RigName" varchar(255) NULL, "Prov_SpudDate" timestamp with time zone NULL, "Prov_SpudDate_Old" timestamp with time zone NULL);
+--
+-- Create model Psd
+--
+CREATE TABLE "PSD" ("ID" serial NOT NULL PRIMARY KEY, "PSD" varchar(255) NULL, "Alias" varchar(50) NULL, "Ellipsoid" varchar(255) NULL, "Datum_txt" varchar(255) NULL, "Projection" varchar(255) NULL, "epsg" integer NULL);
+--
+-- Create model Psd_Datum
+--
+CREATE TABLE "PSD_Datum" ("Datum_id" serial NOT NULL PRIMARY KEY, "Datum" varchar(255) NULL, "ellipsoid" varchar(255) NULL, "epsg" integer NULL, "remark" varchar(255) NULL, "toWgs84_dx_m" double precision NULL, "toWgs84_dy_m" double precision NULL, "toWgs84_dz_m" double precision NULL, "toWgs84_rx_sec" double precision NULL, "toWgs84_ry_sec" double precision NULL, "toWgs84_rz_sec" double precision NULL, "toWgs84_sf_ppm" double precision NULL);
+--
+-- Create model Rig
+--
+CREATE TABLE "RIG" ("ID" integer NOT NULL PRIMARY KEY, "RIG" varchar(255) NULL, "RigFloorHeight" double precision NULL, "MastHeight" varchar(255) NULL, "IsActive" boolean NULL);
+--
+-- Create model SeismicSurvey
+--
+CREATE TABLE "SeismicSurvey" ("ID" serial NOT NULL PRIMARY KEY, "OpenWorksProject" varchar(255) NULL, "SeismicWorksProject" varchar(255) NULL, "Year" varchar(50) NULL);
+--
+-- Create model Seismictype
+--
+CREATE TABLE "SeismicType" ("ID" serial NOT NULL PRIMARY KEY, "SeismicType" varchar(255) NULL);
+--
+-- Create model Seismicvintage
+--
+CREATE TABLE "SeismicVintage" ("ID" serial NOT NULL PRIMARY KEY, "Concession_id" integer NULL, "SeismicVintage" varchar(255) NULL, "OpenWorksProject" varchar(255) NULL, "SeismicWorksProject" varchar(255) NULL, "Year" varchar(50) NULL, "Area_km" double precision NULL, "Path" varchar(255) NULL, "OldPath" varchar(255) NULL);
+--
+-- Create model Staked
+--
+CREATE TABLE "Staked" ("St_id" serial NOT NULL PRIMARY KEY, "St_lat" double precision NULL, "St_long" double precision NULL, "St_east" double precision NULL, "St_north" double precision NULL, "St_elev" double precision NULL, "St_Date" timestamp with time zone NULL, "St_by" varchar(50) NULL, "St_SV" integer NULL, "St_Remarks" text NULL, "St_Type" varchar(50) NULL, "Equip_Tech_id" integer NULL, "UsedControlGarminId" varchar(6) NULL, "TripScope" varchar(255) NULL, "TripID" integer NULL, "TripStartDate" timestamp with time zone NULL, "TripEndDate" timestamp with time zone NULL, "GarminEast" varchar(20) NULL, "GarminNorth" varchar(20) NULL, "GarminLatEg07" varchar(20) NULL, "GarminLongEg07" varchar(20) NULL, "HandOverRep" integer NULL, "FacilitySurveyImage" text NULL, "TGOJobPath" text NULL, "TransportationToSite" varchar(255) NULL, "TransportationInSite" integer NULL, "ImagePath" varchar(255) NULL, "ControlUsed" varchar(255) NULL);
+--
+-- Create model testfrom_django
+--
+CREATE TABLE "testfrom_django" ("id" integer NOT NULL PRIMARY KEY, "Name" varchar(50) NULL, "East_Red" double precision NULL, "North_Red" double precision NULL);
+--
+-- Create model WellGeoinfo
+--
+CREATE TABLE "Well_GeoInfo" ("well_ID" serial NOT NULL PRIMARY KEY, "Concession_txt" varchar(255) NULL, "ArabicNameConcession" varchar(255) NULL, "Location" integer NULL, "Operator" integer NULL, "Alias" varchar(25) NULL, "ArabicNameWell" varchar(255) NULL, "ProposedName" varchar(255) NULL, "EXPLORATION_NAME" varchar(255) NULL, "EGPC_NAME" varchar(255) NULL, "PROJECTS_NAME" varchar(50) NULL, "PRODUCTION_NAME" varchar(255) NULL, "Lat_Red" double precision NULL, "Long_Red" double precision NULL, "East_Red" double precision NULL, "North_Red" double precision NULL, "Elevation" double precision NULL, "Meridian_Conv" varchar(255) NULL, "Magnetic_Dec" varchar(255) NULL, "WELL_TYPE_txt" varchar(255) NULL, "Deviated" boolean NULL, "Well_Status_txt" varchar(255) NULL, "HeightReference" integer NULL, "Issued_by" integer NULL, "Issued_date" timestamp with time zone NULL, "SpudDate_DrillSeq" date NULL, "Spud_date" date NULL, "Well_Remarks" text NULL, "Left_Scale" integer NULL, "Right_Scale" integer NULL, "Chk_id" integer NULL, "ChartView" boolean NULL, "Prov_RigName" varchar(255) NULL, "Prov_SpudDate" timestamp with time zone NULL, "MilitaryPermitID" integer NULL, "MilitaryPermitDate" timestamp with time zone NULL, "MilitaryReNewPermitDate" timestamp with time zone NULL, "MilitaryApproval" integer NULL, "MilitaryApprovalDate" timestamp with time zone NULL, "MilitaryApprovalNumber" varchar(255) NULL, "GuardFamilyID" integer NULL, "Boundary400mBuffer" varchar(255) NULL, "MilitaryMap100ID" integer NULL, "ARGUpperGrossTotal" double precision NULL, "ARGUpperNetTotal" double precision NULL, "ARGUpperPorosity" double precision NULL, "FormationObjectives" varchar(255) NULL, "TD" varchar(255) NULL, "Concession_id" integer NULL, "Rig" integer NULL);
+--
+-- Create model WellStatus
+--
+CREATE TABLE "Well_Status" ("ID" serial NOT NULL PRIMARY KEY, "WELL_STATU" varchar(255) NULL, "IsOperating" boolean NULL);
+--
+-- Create model WellType
+--
+CREATE TABLE "WELL_TYPE" ("ID" serial NOT NULL PRIMARY KEY, "WELL_TYPE" varchar(255) NULL, "ArabicName" varchar(255) NULL, "GroupName" varchar(255) NULL);
+--
+-- Create model Approved
+--
+CREATE TABLE "Approved" ("App_id" serial NOT NULL PRIMARY KEY, "App_name" varchar(50) NULL, "App_InLine" varchar(50) NULL, "App_Xline" varchar(50) NULL, "App_lat" double precision NULL, "App_long" double precision NULL, "App_east" double precision NULL, "App_north" double precision NULL, "App_elev" double precision NULL, "App_date" date NULL, "App_Remarks" text NULL, "App_Type" varchar(50) NULL, "Prop_id" integer NULL UNIQUE, "Appr_East_KeyIn" double precision NULL, "Appr_North_KeyIn" double precision NULL, "Calc_BasedOn" varchar(100) NULL);
+--
+-- Add field well_status to wellgeoinfo
+--
+ALTER TABLE "Well_GeoInfo" ADD COLUMN "Well_Status" integer DEFAULT 5 NULL;
+ALTER TABLE "Well_GeoInfo" ALTER COLUMN "Well_Status" DROP DEFAULT;
+--
+-- Add field well_type to wellgeoinfo
+--
+ALTER TABLE "Well_GeoInfo" ADD COLUMN "WELL_TYPE" integer DEFAULT 2 NULL;
+ALTER TABLE "Well_GeoInfo" ALTER COLUMN "WELL_TYPE" DROP DEFAULT;
+--
+-- Add field well_info to staked
+--
+ALTER TABLE "Staked" ADD COLUMN "Well_Info_Id" integer NULL;
+--
+-- Add field datum_fk to psd
+--
+ALTER TABLE "PSD" ADD COLUMN "datum_fk" integer NULL;
+--
+-- Add field projection to provisional
+--
+ALTER TABLE "Provisional" ADD COLUMN "Projection" integer DEFAULT 2 NULL;
+ALTER TABLE "Provisional" ALTER COLUMN "Projection" DROP DEFAULT;
+--
+-- Add field prov_seismic_survey to provisional
+--
+ALTER TABLE "Provisional" ADD COLUMN "Prov_Seismic_Vintage" integer NULL;
+--
+-- Add field well_info to provisional
+--
+ALTER TABLE "Provisional" ADD COLUMN "Well_Info_Id" integer NULL;
+--
+-- Add field st to checked
+--
+ALTER TABLE "Checked" ADD COLUMN "St_id" integer NULL;
+--
+-- Add field well_info to checked
+--
+ALTER TABLE "Checked" ADD COLUMN "Well_Info_Id" integer NULL;
+--
+-- Add field app_id to wellgeoinfo
+--
+ALTER TABLE "Well_GeoInfo" ADD COLUMN "App_id" integer NULL;
+--
+-- Add field app to staked
+--
+ALTER TABLE "Staked" ADD COLUMN "App_id" integer NULL;
+ALTER TABLE "Well_GeoInfo" ADD CONSTRAINT "Well_GeoInfo_Concession_id_b6a3980d_fk_Concession_ID" FOREIGN KEY ("Concession_id") REFERENCES "Concession" ("ID") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "Well_GeoInfo" ADD CONSTRAINT "Well_GeoInfo_Rig_3d53c608_fk_RIG_ID" FOREIGN KEY ("Rig") REFERENCES "RIG" ("ID") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Well_GeoInfo_Concession_id_b6a3980d" ON "Well_GeoInfo" ("Concession_id");
+CREATE INDEX "Well_GeoInfo_Rig_3d53c608" ON "Well_GeoInfo" ("Rig");
+ALTER TABLE "Approved" ADD CONSTRAINT "Approved_Prop_id_928305e0_fk_Provisional_Prov_id" FOREIGN KEY ("Prop_id") REFERENCES "Provisional" ("Prov_id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Well_GeoInfo_Well_Status_c3f72281" ON "Well_GeoInfo" ("Well_Status");
+ALTER TABLE "Well_GeoInfo" ADD CONSTRAINT "Well_GeoInfo_Well_Status_c3f72281_fk_Well_Status_ID" FOREIGN KEY ("Well_Status") REFERENCES "Well_Status" ("ID") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Well_GeoInfo_WELL_TYPE_c526ba78" ON "Well_GeoInfo" ("WELL_TYPE");
+ALTER TABLE "Well_GeoInfo" ADD CONSTRAINT "Well_GeoInfo_WELL_TYPE_c526ba78_fk_WELL_TYPE_ID" FOREIGN KEY ("WELL_TYPE") REFERENCES "WELL_TYPE" ("ID") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Staked_Well_Info_Id_c34ad3d3" ON "Staked" ("Well_Info_Id");
+ALTER TABLE "Staked" ADD CONSTRAINT "Staked_Well_Info_Id_c34ad3d3_fk_Well_GeoInfo_well_ID" FOREIGN KEY ("Well_Info_Id") REFERENCES "Well_GeoInfo" ("well_ID") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "PSD_datum_fk_c2560431" ON "PSD" ("datum_fk");
+ALTER TABLE "PSD" ADD CONSTRAINT "PSD_datum_fk_c2560431_fk_PSD_Datum_Datum_id" FOREIGN KEY ("datum_fk") REFERENCES "PSD_Datum" ("Datum_id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Provisional_Projection_aaf2fdba" ON "Provisional" ("Projection");
+ALTER TABLE "Provisional" ADD CONSTRAINT "Provisional_Projection_aaf2fdba_fk_PSD_ID" FOREIGN KEY ("Projection") REFERENCES "PSD" ("ID") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Provisional_Prov_Seismic_Vintage_6b08714f" ON "Provisional" ("Prov_Seismic_Vintage");
+ALTER TABLE "Provisional" ADD CONSTRAINT "Provisional_Prov_Seismic_Vintage_6b08714f_fk_SeismicVintage_ID" FOREIGN KEY ("Prov_Seismic_Vintage") REFERENCES "SeismicVintage" ("ID") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Provisional_Well_Info_Id_7bc88327" ON "Provisional" ("Well_Info_Id");
+ALTER TABLE "Provisional" ADD CONSTRAINT "Provisional_Well_Info_Id_7bc88327_fk_Well_GeoInfo_well_ID" FOREIGN KEY ("Well_Info_Id") REFERENCES "Well_GeoInfo" ("well_ID") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Checked_St_id_14970712" ON "Checked" ("St_id");
+ALTER TABLE "Checked" ADD CONSTRAINT "Checked_St_id_14970712_fk_Staked_St_id" FOREIGN KEY ("St_id") REFERENCES "Staked" ("St_id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Checked_Well_Info_Id_b61ce679" ON "Checked" ("Well_Info_Id");
+ALTER TABLE "Checked" ADD CONSTRAINT "Checked_Well_Info_Id_b61ce679_fk_Well_GeoInfo_well_ID" FOREIGN KEY ("Well_Info_Id") REFERENCES "Well_GeoInfo" ("well_ID") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Well_GeoInfo_App_id_5f8ba488" ON "Well_GeoInfo" ("App_id");
+ALTER TABLE "Well_GeoInfo" ADD CONSTRAINT "Well_GeoInfo_App_id_5f8ba488_fk_Approved_App_id" FOREIGN KEY ("App_id") REFERENCES "Approved" ("App_id") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX "Staked_App_id_5005db65" ON "Staked" ("App_id");
+ALTER TABLE "Staked" ADD CONSTRAINT "Staked_App_id_5005db65_fk_Approved_App_id" FOREIGN KEY ("App_id") REFERENCES "Approved" ("App_id") DEFERRABLE INITIALLY DEFERRED;
+COMMIT;

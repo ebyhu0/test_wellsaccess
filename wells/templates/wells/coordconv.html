@@ -1,0 +1,109 @@
+{% extends "wells/base.html" %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_utils %}
+{% load crispy_forms_field %}
+
+{% load dms %}
+{% load template_function %}
+
+{% block content %}
+    {% specialspaceless %}
+<div class="card">
+    <form  method="POST" onsubmit="submit()">
+        {% csrf_token %}
+       
+        {% crispy form %}
+        {% comment %} {{ form.outputX|as_crispy_field }} {% endcomment %}
+        
+        {% comment %} {{form.as_p}} {% endcomment %}
+
+        <div class="row form-row"> 
+            {% comment %} ------Column {% endcomment %}
+            <div class="formColumn form-group col-md-3 mb-0 ml-2"> 
+                <div id="div_id_outputX" class="form-group"> 
+                    <label for="id_outputX" class="col-form-label  requiredField">
+                        Output Easting(X)
+                         
+                    </label> 
+                    <div class=""> 
+                        <input type="text" 
+                        name="id_outputX" 
+                        value={{ x }}
+                        placeholder="X or Longitude(example:300120.012)" 
+                        class="textinput textInput form-control" 
+                        required="False" 
+                        id="id_outputX"> 
+                    </div> 
+                </div>
+            </div> 
+            {% comment %} ------Column {% endcomment %}
+            <div class="formColumn form-group col-md-3 mb-0 ml-2"> 
+                <div id="div_id_outputY" class="form-group"> 
+                    <label for="id_outputY" class="col-form-label  requiredField">
+                        Output Northing(Y)
+                         
+                    </label> 
+                    <div class=""> 
+                        <input type="text" 
+                        name="id_outputY" 
+                        value={{ y }}
+                        placeholder="Y or Latitude(example:300120.012)" 
+                        class="textinput textInput form-control" 
+                        required="False" 
+                        id="id_outputY"> 
+                    </div> 
+                </div>
+            </div>         
+             {% comment %} ------Column {% endcomment %}
+            {% comment %} ------Column {% endcomment %}
+
+        </div>
+
+
+        <div class="row form-row"> 
+            {% comment %} ------Column {% endcomment %}
+            <div class="formColumn form-group col-md-3 mb-0 ml-2"> 
+                <div id="div_id_outputLong" class="form-group"> 
+                    <label for="id_outputLong" class="col-form-label  requiredField">
+                        Output Longitude (ddmmss.sss)
+                        
+                    </label> 
+                    <div class=""> 
+                        <input type="text" 
+                        name="id_outputLong" 
+                        value={{ Long }}
+                        placeholder="Longitude (example:300120.012)" 
+                        class="textinput textInput form-control" 
+                        required="False" 
+                        id="id_outputLong"> 
+                    </div> 
+                </div>
+            </div>         
+            {% comment %} ------Column {% endcomment %}
+            {% comment %} ------Column {% endcomment %}
+            <div class="formColumn form-group col-md-3 mb-0 ml-2"> 
+                <div id="div_id_outputLat" class="form-group"> 
+                    <label for="id_outputLat" class="col-form-label  requiredField">
+                        Output Latitude (ddmmss.sss)
+                        
+                    </label> 
+                    <div class=""> 
+                        <input type="text" 
+                        name="id_outputLat" 
+                        value={{ Lat }}
+                        placeholder="Latitude(example:300120.012)" 
+                        class="textinput textInput form-control" 
+                        required="False" 
+                        id="id_outputLat"> 
+                    </div> 
+                </div>
+            </div> 
+     
+            {% comment %} ------Column {% endcomment %}
+
+        </div>
+
+    </form>
+</div>
+    {% endspecialspaceless %}
+{% endblock content %}

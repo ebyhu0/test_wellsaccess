@@ -1,0 +1,117 @@
+{% extends "wells/base.html" %}
+{% load crispy_forms_tags %}
+{% load django_tables2 %}
+
+{% block content %}
+
+    {% comment %} Wells Number & Add New Well button {% endcomment %}
+    <div class="card">   {% comment %} style="width:800px;height:100px"> {% endcomment %}
+        <h1>
+            
+            {{ table.rows|length }} well{{ table.rows|length|pluralize }} in ( {% for row in table.rows|slice:":1" %} {{row.record.concession}}{% endfor %} )  {{ filter.form.exploration_name.label_tag }} concession, (<label id='selected'>0</label>) selected
+            {% comment %} <a class="btn btn-success ml-5" style="width:300px;height:40px" href="{% url 'add-well-conc' conc_id %}"> <strong>Add new Well</strong></a> {% endcomment %}
+            
+        </h1>
+        {% comment %} <a href="{% url 'well-addnew2' %}" class="btn btn-small btn-primary dark">
+            <span class="hidden-phone"><i class="fa fa-user-plus"></i> Add new Well</span>
+        </a> {% endcomment %}
+    </div>
+    {% comment %} ------------------------------ {% endcomment %}
+    {% comment %} Search Fields Form {% endcomment %}
+    <div class="card">
+        {% if filter %}
+            <form method="GET">
+                    
+                    {{ filter.form }}
+                    {% comment %} <input type="submit" /> {% endcomment %}
+               
+                {% comment %} {% for obj in filter.qs %}
+                    {{ obj.exploration_name }} <br />
+                {% endfor %} {% endcomment %}
+                {% comment %} {{ filter.form|crispy}} {% endcomment %}
+                {% comment %} <button type="submit" class="btn btn-primary">Search</button> {% endcomment %}
+                <button type="submit" style="width:300px;height:50px" class="btn btn-small btn-info"><i class="fa fa-search"></i> Search</button>
+ 
+            </form>
+            
+
+        {% endif %}
+        </br>
+    </div>
+
+
+
+<div class="form-inline">
+    {% comment %} <form method="POST">{% csrf_token %} {% endcomment %}
+        {% comment %} <button style="width:300px;height:50px;font-size:20px" class="btn btn-small btn-info" type="submit"/><< BACK {% endcomment %}
+    {% comment %} </form> {% endcomment %}
+    {% comment %} <button "Empty List" onclick="clearList();" style="width:300px;height:50px;font-size:20px" class="btn btn-small btn-success ml-5"/>Empty List {% endcomment %}
+    <button "Empty List" onclick="location.href='{% url 'cart:removeAll' %}'"  style="width:300px;height:50px;font-size:20px" class="btn btn-small btn-success ml-5"/>Empty List
+</div>
+    {% render_table table "wells/django-tables2/table.html" %}
+    
+
+<script language="JavaScript">
+    function toggle(source) {
+        checkboxes = document.getElementsByName('select_chkbox'); ///  request.session['pks']
+        var js_pks  = "{{ request.session.cart|safe }}"; // |escapejs
+        var res = js_pks.replace(/]| |'|/gi, "");
+        res = res.replace("[", "");
+        var arrpks = res.split( "," );
+        
+        //tt = res.toArray
+        
+ 
+        //arrpks = js_pks.toArray();
+        //var arrpks = js_pks.split( "," );
+        //Array.isArray(arrpks)
+        //var energy = js_pks.join(",");
+        //js_pks.forEach(myFunction);
+
+        //function myFunction(item, index) {
+        //    document.getElementById("selected").innerHTML += index + ":" + item + "<br>"; 
+        //}
+        //var listOfObjects = [];
+        //js_pks.forEach(function(entry) {
+            //var singleObj = {};
+            //singleObj['type'] = 'vehicle';
+            //singleObj['value'] = entry;
+            //listOfObjects.push(singleObj);
+        //});
+        
+        //document.getElementById("selected").innerHTML = js_pks + "::" + arrpks + ":" + arrpks.length; //js_pks + ":" + js_pks.length;//Array.isArray(js_pks); /// empty.length;
+        document.getElementById("selected").innerHTML =arrpks.length;
+        
+        
+        for(var i in checkboxes)
+            checkboxes[i].checked = source.checked;
+        var tt= checkboxselect (this);
+    }
+
+    function checkboxselect(source) {
+        var y = document.querySelectorAll('input[name=select_chkbox]:checked');
+
+        ///document.getElementById("selected").innerHTML = y.length; /// empty.length;
+        //request.session.pks=28;
+    }
+
+</script>
+
+
+{% comment %}
+<script language="JavaScript">
+window.updateCount = function() {
+    var x = $(".z:checked").length;
+    document.getElementById("selected").innerHTML = x;
+};    
+</script> {% endcomment %}
+
+{% comment %} 
+<script language="JavaScript">
+function updateCount {
+    var x = document.querySelector('.z:checked').length;
+    document.getElementById("selected").innerHTML = x;
+};
+</script> {% endcomment %}
+
+{% endblock content %}

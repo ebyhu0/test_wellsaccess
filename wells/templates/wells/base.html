@@ -1,0 +1,204 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'wells/main.css' %}">
+    {% comment %}----------------------  <title>jQuery UI Datepicker - Default functionality</title>-------------------- {% endcomment %}
+    {% comment %} <link type="text/css" rel="stylesheet" href="http://ajax.microsoft.com/ajax/jquery.ui/1.8.6/themes/smoothness/jquery-ui.css"> {% endcomment %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
+
+    {% comment %} <link href="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/css/bootstrap-datetimepicker.min.css" rel="stylesheet"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" /> {% endcomment %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  
+
+    {% if title %}
+        <title>BX App - {{ title }}</title>
+    {% else %}
+        <title>BX App Wells</title>
+    {% endif %}
+</head>
+<body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand mr-4" href="{% url 'bx-home' %}">BX Application Wells</a>
+          
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="{% url 'bx-home' %}">Home</a>
+              <a class="nav-item nav-link" href="{% url 'bx-about' %}">About</a>
+              <a class="btn btn-danger" href="{% url 'tablelist-concs' %}"> <strong>Concessions</strong></a>
+              <a class="btn btn-warning" href="{% url 'Wellstable_filter' %}"> <strong>All Wells</strong></a>
+              <a class="btn btn-dark" href="{% url 'coordconv' %}"> <strong>Coordinates Conversion</strong></a>
+            </div>
+
+            {% comment %} // ----------------------------------- // {% endcomment %}
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+              {% if user.is_authenticated %}
+
+                {% comment %} --------------------- {% endcomment %}
+                
+                <a class="btn btn-danger" href="{% url 'selectedWellscart' %}"> <strong>({{ request.session.cart|length }}) Wells in Cart2  </strong></a>
+
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown button
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                    <a class="dropdown-item" href="{% url 'coordconv' %}">Coordinates Conversion</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+
+                {% comment %} ---------------------- {% endcomment %}
+
+
+
+
+
+                <a class="btn btn-success" href="{% url 'well-addnew2' %}"> <strong>Add new Well</strong></a>
+                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                <a class="nav-item nav-link" href="#">User : ({{request.user}})</a>
+                <a class="nav-item nav-link" href="{% url 'logout' %}?next={% url 'bx-home' %}">Logout</a>
+              {% else %}
+                <a class="nav-item nav-link" href="{% url 'login' %}?next={% url 'bx-home' %}">Login</a>
+                <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main role="main" class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          {% block content %}
+          {% endblock %}
+        </div>
+        {% comment %} <div class="col-md-4">
+          <div class="content-section">
+            <h3>Our Sidebar</h3>
+            <p class='text-muted'>You can put any information here you'd like.
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-light">Latest Posts</li>
+                <li class="list-group-item list-group-item-light">Announcements</li>
+                <li class="list-group-item list-group-item-light">Calendars</li>
+                <li class="list-group-item list-group-item-light">etc</li>
+              </ul>
+            </p>
+          </div>
+        </div> {% endcomment %}
+      </div>
+    </main>
+
+    {% comment %} <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> {% endcomment %}
+    {% comment %} <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script> {% endcomment %}
+    {% comment %} <script type="text/javascript" src="{% static 'wells/jquery-3.4.1.min.js' %}"></script>  {% endcomment %}
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    {% comment %} <script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script> {% endcomment %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    {% comment %} <script type="text/javascript" src="{% static 'wells/bootstrap-tab.js' %}"></script>  {% endcomment %}
+
+    {% comment %} <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>  {% endcomment %}
+    {% comment %} <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.ui/1.8.6/jquery-ui.min.js"></script>  {% endcomment %}
+
+    {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>  {% endcomment %}
+
+
+    {% comment %} <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> {% endcomment %}
+    {% comment %} <script src="//cdn.bootcss.com/moment.js/2.17.1/moment.min.js"></script> {% endcomment %}
+    {% comment %} <script src="//cdn.bootcss.com/bootstrap-datetimepicker/4.17.44/js/bootstrap-datetimepicker.min.js"></script> {% endcomment %}
+
+    {% comment %}----------------------  <title>jQuery UI Datepicker - Default functionality</title>-------------------- {% endcomment %}
+     {% comment %} <link rel="stylesheet" href="/resources/demos/style.css"> {% endcomment %}
+    
+    
+    
+    
+    
+
+
+    <script>
+      $( function() {
+        $( "#tabs" ).tabs();
+      } );
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $(".nav-tabs a").click(function(){
+          $(this).tab('show');
+        });
+      });
+    </script>
+    
+    <script>
+      $(function() {
+      $( ".datepicker" ).datepicker({
+          changeMonth: true,
+          changeYear: true,
+          yearRange: "1900:2030",
+          // format: 'DD/MM/YYYY',
+          // You can put more options here.
+
+          });
+      });
+    </script>
+
+
+    <script>
+        $( function() {
+          $( "#datepicker" ).datepicker({
+            format: 'DD/MM/YYYY',
+          });
+        } );
+    </script>
+
+      {% comment %} <script>
+          $(function () {
+              $("#id_date").datepicker({
+              format:'dd/mm/yyyy',
+              });
+          });
+      </script> {% endcomment %}
+
+<script language="JavaScript">
+
+    function toggle(source) {
+        checkboxes = document.getElementsByName('select_chkbox');
+        for(var i in checkboxes)
+            checkboxes[i].checked = source.checked;
+        var tt= countbox (this);
+    }
+
+
+    function countbox(source) {
+        var y = document.querySelectorAll('input[name=select_chkbox]:checked');
+        document.getElementById("selected").innerHTML = y.length; /// empty.length;
+    }
+
+</script>
+ </body>
+</html>

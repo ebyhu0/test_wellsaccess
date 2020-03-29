@@ -1,0 +1,28 @@
+
+{% extends "wells/base.html" %}
+{% load crispy_forms_tags %}
+{% load django_tables2 %}
+{% comment %} {% load render_table from django_tables2 %} {% endcomment %}
+
+
+{% comment %} {% load querystring from django_tables2 %} {% endcomment %}
+
+{% block content %}
+    <h1>
+        {{ table.rows|length }} Concessions in Bapetco DB</br>
+        {% comment %} <a href="{% url 'add-well-conc' conc_id %}" class="btn btn-small btn-primary dark"><span class="hidden-phone"><i class="fa fa-user-plus"></i> Add new Well</span></a> {% endcomment %}
+
+
+       
+    </h1>
+    
+     {% render_table table "wells/django-tables2/table.html" %}
+ 
+    {% comment %} {% for table in tables %} {% endcomment %}
+        {% comment %} {% render_table table %} {% endcomment %}
+        {% comment %} {% render_table table %} {% endcomment %}
+    {% comment %} {% endfor %} {% endcomment %}
+
+        <br/>
+
+{% endblock content %}

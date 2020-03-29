@@ -1,0 +1,57 @@
+{% extends "wells/base.html" %}
+{% load crispy_forms_tags %}
+{% load django_tables2 %}
+
+{% block content %}
+
+    {% comment %} Wells Number & Add New Well button {% endcomment %}
+    <div class="card">   {% comment %} style="width:800px;height:100px"> {% endcomment %}
+        <h1>
+            
+            {{ table.rows|length }} well{{ table.rows|length|pluralize }} in ( {% for row in table.rows|slice:":1" %} {{row.record.concession}}{% endfor %} )  {{ filter.form.exploration_name.label_tag }} concession, (<label id='selected'>0</label>) selected
+            <a class="btn btn-success ml-5" style="width:300px;height:40px" href="{% url 'add-well-conc' conc_id %}"> <strong>Add new Well</strong></a>
+            
+        </h1>
+        {% comment %} <a href="{% url 'well-addnew2' %}" class="btn btn-small btn-primary dark">
+            <span class="hidden-phone"><i class="fa fa-user-plus"></i> Add new Well</span>
+        </a> {% endcomment %}
+    </div>
+    {% comment %} ------------------------------ {% endcomment %}
+    {% comment %} Search Fields Form {% endcomment %}
+    <div class="card">
+        {% if filter %}
+            <form method="GET">
+                    
+                    {{ filter.form }}
+                    {% comment %} <input type="submit" /> {% endcomment %}
+               
+                {% comment %} {% for obj in filter.qs %}
+                    {{ obj.exploration_name }} <br />
+                {% endfor %} {% endcomment %}
+                {% comment %} {{ filter.form|crispy}} {% endcomment %}
+                {% comment %} <button type="submit" class="btn btn-primary">Search</button> {% endcomment %}
+                <button type="submit" style="width:300px;height:50px" class="btn btn-small btn-info"><i class="fa fa-search"></i> Search</button>
+ 
+            </form>
+            
+
+        {% endif %}
+        </br>
+    </div>
+
+
+   
+
+
+    <form action="{% url 'addMultiple_ToCart' %}" method="POST">{% csrf_token %}
+        {% if user.username %}
+            <input value="Add Selected To Cart" style="width:300px;height:50px" class="btn btn-small btn-info" type="submit"/>
+        {% endif %}
+        {% render_table table "wells/django-tables2/table.html" %}
+    </form>
+
+
+{% endblock content %}
+
+
+
